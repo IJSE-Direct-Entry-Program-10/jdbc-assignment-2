@@ -12,9 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.dep10.assignment.db.DBConnection;
+import lk.ijse.dep10.assignment.util.PasswordEncoder;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.regex.Pattern;
@@ -32,12 +34,13 @@ public class SignUpViewController {
 
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-            Statement stm = connection.createStatement();
             String sql = "INSERT INTO User (full_name, username, password, role) " +
-                    "VALUES ('%s', '%s', '%s', 'ADMIN')";
-            sql = String.format(sql,
-                    txtFullName.getText(), txtUsername.getText(), txtPassword.getText());
-            stm.executeUpdate(sql);
+                    "VALUES (?, ?, ?, 'ADMIN')";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, txtFullName.getText());
+            stm.setString(2, txtUsername.getText());
+            stm.setString(3, PasswordEncoder.encode(txtPassword.getText()));
+            stm.executeUpdate();
 
             URL loginView = getClass().getResource("/view/LoginView.fxml");
             var loginScene = new Scene(FXMLLoader.load(loginView));

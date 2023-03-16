@@ -28,7 +28,7 @@ public class AppInitializer extends Application {
         boolean adminExists = adminExists();
         String url = adminExists ? "/view/LoginView.fxml": "/view/SignUpView.fxml";
         primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource(url))));
-        primaryStage.setResizable(false);
+//        primaryStage.setResizable(false);
         primaryStage.setTitle(adminExists ? "Login": "Create Admin Account");
         primaryStage.show();
         primaryStage.centerOnScreen();

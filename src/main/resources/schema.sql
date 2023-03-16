@@ -5,3 +5,5 @@ CREATE TABLE User(
     password VARCHAR(300) NOT NULL,
     role ENUM('ADMIN', 'USER') NOT NULL
 );
+
+SELECT * FROM User WHERE username='abc' OR 1=1 #' AND password='ijSE@2023'  ;

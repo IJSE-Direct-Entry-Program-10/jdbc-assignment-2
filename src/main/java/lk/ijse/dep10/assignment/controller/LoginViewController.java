@@ -10,12 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.dep10.assignment.db.DBConnection;
 import lk.ijse.dep10.assignment.model.User;
+import lk.ijse.dep10.assignment.util.PasswordEncoder;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class LoginViewController {
 
@@ -29,10 +27,10 @@ public class LoginViewController {
 
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-            Statement stm = connection.createStatement();
-            String sql = "SELECT * FROM User WHERE username='%s' AND password='%s'";
-            sql = String.format(sql, username, password);
-            ResultSet rst = stm.executeQuery(sql);
+            String sql = "SELECT * FROM User WHERE username=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rst = stm.executeQuery();
 
             if (!rst.next()){
                 txtUsername.getStyleClass().add("invalid");
@@ -40,6 +38,14 @@ public class LoginViewController {
                 txtUsername.requestFocus();
                 txtUsername.selectAll();
             }else{
+                if (!PasswordEncoder.matches(password, rst.getString("password"))){
+                    txtUsername.getStyleClass().add("invalid");
+                    txtPassword.getStyleClass().add("invalid");
+                    txtUsername.requestFocus();
+                    txtUsername.selectAll();
+                    return;
+                }
+
                 String fullName = rst.getString("full_name");
                 User.Role role = User.Role.valueOf(rst.getString("role"));
                 User principal = new User(fullName, username, password, role);
