@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS User;
+CREATE TABLE User(
+    username VARCHAR(50) PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    password VARCHAR(300) NOT NULL,
+    role ENUM('MALE', 'FEMALE') NOT NULL
+);
