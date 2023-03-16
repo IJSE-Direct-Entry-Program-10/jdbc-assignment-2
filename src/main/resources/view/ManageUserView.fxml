@@ -48,8 +48,9 @@
       </VBox>
       <TableView fx:id="tblUsers" layoutX="15.0" layoutY="225.0" onKeyReleased="#tblUsersOnKeyReleased" prefHeight="200.0" prefWidth="570.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="225.0">
         <columns>
-          <TableColumn prefWidth="296.0" text="Full Name" />
-          <TableColumn prefWidth="238.0" text="Username" />
+          <TableColumn prefWidth="235.0" text="Full Name" />
+          <TableColumn prefWidth="246.0" text="Username" />
+            <TableColumn prefWidth="75.0" text="Role" />
         </columns>
       </TableView>
       <Button fx:id="btnNewUser" layoutX="485.0" layoutY="24.0" mnemonicParsing="false" onAction="#btnNewUserOnAction" prefHeight="26.0" prefWidth="100.0" text="New User +" />
