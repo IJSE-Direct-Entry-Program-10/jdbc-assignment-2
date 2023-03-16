@@ -1,6 +1,7 @@
 package lk.ijse.dep10.assignment;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,11 +25,23 @@ public class AppInitializer extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         generateTables();
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SignUpView.fxml"))));
+        boolean adminExists = adminExists();
+        String url = adminExists ? "/view/LoginView.fxml": "/view/SignUpView.fxml";
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource(url))));
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Create Admin Account");
+        primaryStage.setTitle(adminExists ? "Login": "Create Admin Account");
         primaryStage.show();
         primaryStage.centerOnScreen();
+    }
+
+    private boolean adminExists(){
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            Statement stm = connection.createStatement();
+            return stm.executeQuery("SELECT * FROM User WHERE role='ADMIN'").next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void generateTables() {
