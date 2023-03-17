@@ -7,14 +7,20 @@ import javafx.application.Platform;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import lk.ijse.dep10.assignment.model.User;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,8 +57,14 @@ public class MainViewController {
         });
     }
 
-    public void btnManageCustomersOnAction(ActionEvent event) {
-
+    public void btnManageCustomersOnAction(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("Manage Customers");
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"))));
+        stage.initOwner(btnManageCustomers.getScene().getWindow());
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.show();
+        stage.centerOnScreen();
     }
 
     

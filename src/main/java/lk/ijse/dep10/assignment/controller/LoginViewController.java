@@ -53,6 +53,7 @@ public class LoginViewController {
                 URL mainViewUrl = getClass().getResource("/view/MainView.fxml");
                 Scene mainViewScene = new Scene(FXMLLoader.load(mainViewUrl));
                 Stage stage = (Stage) btnLogin.getScene().getWindow();
+                stage.setTitle("POS System");
                 stage.setScene(mainViewScene);
                 stage.sizeToScene();
                 stage.centerOnScreen();

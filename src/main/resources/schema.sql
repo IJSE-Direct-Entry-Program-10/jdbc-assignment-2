@@ -6,4 +6,17 @@ CREATE TABLE User(
     role ENUM('ADMIN', 'USER') NOT NULL
 );
 
-SELECT * FROM User WHERE username='abc' OR 1=1 #' AND password='ijSE@2023'  ;
+CREATE TABLE Customer(
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    address VARCHAR(500) NOT NULL
+);
+
+CREATE TABLE Contact(
+    contact VARCHAR(15) NOT NULL,
+    customer_id INT NOT NULL,
+    CONSTRAINT uk_contact UNIQUE KEY (contact),
+    CONSTRAINT pk_contact PRIMARY KEY (contact, customer_id)
+);
+
+ALTER TABLE Contact ADD CONSTRAINT fk_contact FOREIGN KEY (customer_id) REFERENCES Customer (id);
